@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Crop System</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            color: white;
+            background-image: url("https://images.unsplash.com/photo-1500382017468-9049fed747ef");
+            background-size: cover;
+            background-position: center;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        h1 {
+            color: #a5d6a7;
+        }
+
+        .box {
+            background: rgba(255,255,255,0.9);
+            color: black;
+            padding: 20px;
+            margin: 40px 20px;
+            border-radius: 15px;
+        }
+
+        input, select, button {
+            width: 80%;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        button {
+            background: green;
+            color: white;
+        }
+
+        #mainPage {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🌾 Smart Crop System</h1>
+
+<!-- 🔐 LOGIN PAGE -->
+<div class="box" id="loginPage">
+    <h3>Login</h3>
+
+    <input type="text" id="username" placeholder="Enter Username">
+    <input type="password" id="password" placeholder="Enter Password">
+
+    <button onclick="login()">Login</button>
+
+    <p id="error" style="color:red;"></p>
+</div>
+
+<!-- 🌾 MAIN PAGE -->
+<div id="mainPage">
+
+    <div class="box">
+        <h3>Enter Details</h3>
+
+        <select id="soil">
+            <option>Black Soil</option>
+            <option>Red Soil</option>
+            <option>Sandy Soil</option>
+        </select>
+
+        <select id="season">
+            <option>Kharif</option>
+            <option>Rabi</option>
+            <option>Summer</option>
+        </select>
+
+        <select id="water">
+            <option>Low</option>
+            <option>Medium</option>
+            <option>High</option>
+        </select>
+
+        <button onclick="checkCrop()">Get Crop Suggestion</button>
+
+        <h3 id="result"></h3>
+
+        <br>
+
+        <a href="https://agmarknet.gov.in" target="_blank">
+            <button>📊 Check Market Price</button>
+        </a>
+
+        <br><br>
+
+        <button onclick="logout()">Logout</button>
+    </div>
+
+</div>
+
+<script>
+function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if (user === "admin" && pass === "1234") {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("mainPage").style.display = "block";
+    } else {
+        document.getElementById("error").innerText = "Invalid Username or Password";
+    }
+}
+
+function logout() {
+    document.getElementById("mainPage").style.display = "none";
+    document.getElementById("loginPage").style.display = "block";
+}
+
+function checkCrop() {
+    let soil = document.getElementById("soil").value;
+    let season = document.getElementById("season").value;
+    let water = document.getElementById("water").value;
+
+    let result = "";
+
+    if (soil === "Black Soil" && season === "Kharif") {
+        if (water === "Medium" || water === "High") {
+            result = "🌱 Cotton → Good for black soil<br>🌱 Soybean → Profitable crop";
+        } else {
+            result = "🌱 Bajra → Suitable for low water";
+        }
+    } else if (soil === "Red Soil") {
+        if (season === "Kharif") {
+            result = "🌱 Groundnut → Best for red soil";
+        } else {
+            result = "🌱 Pulses → Good for Rabi";
+        }
+    } else {
+        result = "🌱 Watermelon, Vegetables";
+    }
+
+    document.getElementById("result").innerHTML = result;
+}
+</script>
+
+</body>
+</html>
